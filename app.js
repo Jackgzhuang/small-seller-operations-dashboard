@@ -14,6 +14,9 @@ const paymentStatuses = ["Paid", "Pending", "Refunded", "Unpaid"];
 const fulfillmentStatuses = ["New", "Packed", "Shipped", "Picked up", "Delivered", "On hold"];
 const deliveryMethods = ["shipping", "pickup", "local delivery", "digital", "undecided"];
 
+const today = new Date();
+today.setHours(12, 0, 0, 0);
+
 let products = [
   {
     id: "p-001",
@@ -27,7 +30,7 @@ let products = [
     currentStock: 18,
     lowStockThreshold: 6,
     activeSalesChannels: ["Instagram", "Shopify", "Offline"],
-    lastUpdated: "2026-06-29",
+    lastUpdated: dateDaysAgo(2),
   },
   {
     id: "p-002",
@@ -41,7 +44,7 @@ let products = [
     currentStock: 4,
     lowStockThreshold: 5,
     activeSalesChannels: ["Etsy", "Instagram", "Manual"],
-    lastUpdated: "2026-06-25",
+    lastUpdated: dateDaysAgo(5),
   },
   {
     id: "p-003",
@@ -55,7 +58,7 @@ let products = [
     currentStock: 999,
     lowStockThreshold: 20,
     activeSalesChannels: ["Etsy", "Shopify", "Other"],
-    lastUpdated: "2026-06-30",
+    lastUpdated: dateDaysAgo(1),
   },
   {
     id: "p-004",
@@ -69,7 +72,7 @@ let products = [
     currentStock: 0,
     lowStockThreshold: 8,
     activeSalesChannels: ["Facebook", "Instagram", "Offline"],
-    lastUpdated: "2026-05-28",
+    lastUpdated: dateDaysAgo(34),
   },
   {
     id: "p-005",
@@ -83,7 +86,7 @@ let products = [
     currentStock: 7,
     lowStockThreshold: 7,
     activeSalesChannels: ["Amazon", "Shopify", "Offline"],
-    lastUpdated: "2026-06-18",
+    lastUpdated: dateDaysAgo(13),
   },
   {
     id: "p-006",
@@ -97,7 +100,7 @@ let products = [
     currentStock: 32,
     lowStockThreshold: 10,
     activeSalesChannels: ["Etsy", "Instagram", "WooCommerce"],
-    lastUpdated: "2026-06-05",
+    lastUpdated: dateDaysAgo(26),
   },
   {
     id: "p-007",
@@ -111,7 +114,7 @@ let products = [
     currentStock: 3,
     lowStockThreshold: 9,
     activeSalesChannels: ["Manual", "Offline", "Facebook"],
-    lastUpdated: "2026-05-30",
+    lastUpdated: dateDaysAgo(32),
   },
   {
     id: "p-008",
@@ -125,23 +128,23 @@ let products = [
     currentStock: 21,
     lowStockThreshold: 6,
     activeSalesChannels: ["WooCommerce", "Shopify", "Manual"],
-    lastUpdated: "2026-06-27",
+    lastUpdated: dateDaysAgo(3),
   },
 ];
 
 let orders = [
-  order("o-1001", "Avery Brooks", "p-001", 2, "Instagram", "2026-06-30", "Paid", "Packed", "shipping", "DM order, ship together."),
-  order("o-1002", "Lena Park", "p-003", 1, "Etsy", "2026-06-30", "Paid", "Delivered", "digital", "Auto-delivered PDF."),
-  order("o-1003", "Nora Patel", "p-002", 1, "Instagram", "2026-06-29", "Paid", "New", "pickup", "Pickup Thursday."),
-  order("o-1004", "Mateo Silva", "p-005", 1, "Amazon", "2026-06-28", "Paid", "Shipped", "shipping", "Standard label."),
-  order("o-1005", "Jules Kim", "p-007", 2, "Offline", "2026-06-27", "Paid", "Picked up", "pickup", "Farmers market sale."),
-  order("o-1006", "Priya Singh", "p-006", 3, "WooCommerce", "2026-06-26", "Pending", "On hold", "shipping", "Awaiting payment confirmation."),
-  order("o-1007", "Sam Rivera", "p-004", 1, "Facebook", "2026-06-24", "Paid", "New", "local delivery", "Waitlist item, out of stock risk."),
-  order("o-1008", "Morgan Lee", "p-008", 2, "Shopify", "2026-06-24", "Paid", "Delivered", "shipping", "Gift note included."),
-  order("o-1009", "Camille Stone", "p-001", 1, "Offline", "2026-06-22", "Paid", "Picked up", "pickup", "Pop-up event."),
-  order("o-1010", "Evan Moore", "p-003", 4, "Other", "2026-06-21", "Paid", "Delivered", "digital", "Bundle promo."),
-  order("o-1011", "Rina Walsh", "p-006", 2, "Etsy", "2026-06-18", "Paid", "Shipped", "shipping", "Repeat customer."),
-  order("o-1012", "Theo Garcia", "p-002", 1, "Manual", "2026-06-16", "Unpaid", "On hold", "undecided", "Invoice sent."),
+  order("o-1001", "Avery Brooks", "p-001", 2, "Instagram", dateDaysAgo(0), "Paid", "Packed", "shipping", "DM order, ship together."),
+  order("o-1002", "Lena Park", "p-003", 1, "Etsy", dateDaysAgo(0), "Paid", "Delivered", "digital", "Auto-delivered PDF."),
+  order("o-1003", "Nora Patel", "p-002", 1, "Instagram", dateDaysAgo(1), "Paid", "New", "pickup", "Pickup Thursday."),
+  order("o-1004", "Mateo Silva", "p-005", 1, "Amazon", dateDaysAgo(2), "Paid", "Shipped", "shipping", "Standard label."),
+  order("o-1005", "Jules Kim", "p-007", 2, "Offline", dateDaysAgo(3), "Paid", "Picked up", "pickup", "Farmers market sale."),
+  order("o-1006", "Priya Singh", "p-006", 3, "WooCommerce", dateDaysAgo(4), "Pending", "On hold", "shipping", "Awaiting payment confirmation."),
+  order("o-1007", "Sam Rivera", "p-004", 1, "Facebook", dateDaysAgo(5), "Paid", "New", "local delivery", "Waitlist item, out of stock risk."),
+  order("o-1008", "Morgan Lee", "p-008", 2, "Shopify", dateDaysAgo(6), "Paid", "Delivered", "shipping", "Gift note included."),
+  order("o-1009", "Camille Stone", "p-001", 1, "Offline", dateDaysAgo(8), "Paid", "Picked up", "pickup", "Pop-up event."),
+  order("o-1010", "Evan Moore", "p-003", 4, "Other", dateDaysAgo(9), "Paid", "Delivered", "digital", "Bundle promo."),
+  order("o-1011", "Rina Walsh", "p-006", 2, "Etsy", dateDaysAgo(12), "Paid", "Shipped", "shipping", "Repeat customer."),
+  order("o-1012", "Theo Garcia", "p-002", 1, "Manual", dateDaysAgo(14), "Unpaid", "On hold", "undecided", "Invoice sent."),
 ];
 
 const checklistItems = [
@@ -154,6 +157,8 @@ const checklistItems = [
 ];
 
 let checklistState = checklistItems.map((label, index) => ({ label, done: index < 2 }));
+const initialProducts = cloneData(products);
+const initialOrders = cloneData(orders);
 
 function order(id, customerName, productId, quantity, salesChannel, orderDate, paymentStatus, fulfillmentStatus, deliveryMethod, notes) {
   return {
@@ -171,7 +176,23 @@ function order(id, customerName, productId, quantity, salesChannel, orderDate, p
 }
 
 const dollars = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
-const today = new Date("2026-07-01T12:00:00");
+
+function cloneData(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function dateDaysAgo(days) {
+  const date = new Date(today);
+  date.setDate(today.getDate() - days);
+  return formatDate(date);
+}
 
 function productById(id) {
   return products.find((product) => product.id === id);
@@ -386,7 +407,7 @@ function populateFormOptions() {
   populateSelect(form.paymentStatus, paymentStatuses);
   populateSelect(form.fulfillmentStatus, fulfillmentStatuses);
   populateSelect(form.deliveryMethod, deliveryMethods);
-  if (!form.orderDate.value) form.orderDate.value = "2026-07-01";
+  if (!form.orderDate.value) form.orderDate.value = formatDate(today);
 }
 
 function populateSelect(select, values, getValue = (value) => value, getLabel = (value) => value) {
@@ -430,7 +451,17 @@ function addOrder(event) {
 
   warning.textContent = "";
   form.reset();
-  form.orderDate.value = "2026-07-01";
+  form.orderDate.value = formatDate(today);
+  render();
+}
+
+function resetDemoData() {
+  products = cloneData(initialProducts);
+  orders = cloneData(initialOrders);
+  checklistState = checklistItems.map((label, index) => ({ label, done: index < 2 }));
+  document.getElementById("importStatus").textContent = "";
+  document.getElementById("orderWarning").textContent = "";
+  document.getElementById("orderForm").reset();
   render();
 }
 
@@ -563,6 +594,7 @@ document.addEventListener("change", (event) => {
 document.getElementById("productSearch").addEventListener("input", renderProducts);
 document.getElementById("stockFilter").addEventListener("change", renderProducts);
 document.getElementById("orderForm").addEventListener("submit", addOrder);
+document.getElementById("resetDemo").addEventListener("click", resetDemoData);
 document.getElementById("csvImport").addEventListener("change", (event) => {
   const [file] = event.target.files;
   if (file) importProducts(file);
